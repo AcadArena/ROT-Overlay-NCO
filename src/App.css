@@ -1,38 +1,80 @@
-.App {
-  text-align: center;
+@font-face {
+  font-family: "Industry";
+  src: url("assets/fonts/Industry-Light.eot");
+  src: local("Industry Light"), local("Industry-Light"),
+    url("assets/fonts/Industry-Light.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/Industry-Light.woff") format("woff"),
+    url("assets/fonts/Industry-Light.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+@font-face {
+  font-family: "Industry";
+  src: url("assets/fonts/Industry-Bold.eot");
+  src: local("Industry Bold"), local("Industry-Bold"),
+    url("assets/fonts/Industry-Bold.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/Industry-Bold.woff") format("woff"),
+    url("assets/fonts/Industry-Bold.ttf") format("truetype");
+  font-weight: bold;
+  font-style: normal;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+@font-face {
+  font-family: "Industry-Book";
+  src: url("assets/fonts/Industry-Book.eot");
+  src: local("Industry Book"), local("Industry-Book"),
+    url("assets/fonts/Industry-Book.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/Industry-Book.woff") format("woff"),
+    url("assets/fonts/Industry-Book.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+@font-face {
+  font-family: "Industry";
+  src: url("assets/fonts/Industry-Black.eot");
+  src: local("Industry Black"), local("Industry-Black"),
+    url("assets/fonts/Industry-Black.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/Industry-Black.woff") format("woff"),
+    url("assets/fonts/Industry-Black.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
 }
 
-.App-link {
-  color: #61dafb;
+@font-face {
+  font-family: "Industry";
+  src: url("assets/fonts/Industry-Medium.eot");
+  src: local("Industry Medium"), local("Industry-Medium"),
+    url("assets/fonts/Industry-Medium.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/Industry-Medium.woff") format("woff"),
+    url("assets/fonts/Industry-Medium.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+@font-face {
+  font-family: "Industry-Demi";
+  src: url("assets/fonts/Industry-Demi.eot");
+  src: local("Industry Demi"), local("Industry-Demi"),
+    url("assets/fonts/Industry-Demi.eot?#iefix") format("embedded-opentype"),
+    url("assets/fonts/Industry-Demi.woff") format("woff"),
+    url("assets/fonts/Industry-Demi.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Druk Wide Bold";
+  src: url("//db.onlinewebfonts.com/t/2206d6cc490084998d531e8c1b2cbb4a.eot");
+  src: url("//db.onlinewebfonts.com/t/2206d6cc490084998d531e8c1b2cbb4a.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/2206d6cc490084998d531e8c1b2cbb4a.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/2206d6cc490084998d531e8c1b2cbb4a.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/2206d6cc490084998d531e8c1b2cbb4a.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/2206d6cc490084998d531e8c1b2cbb4a.svg#Druk Wide Bold")
+      format("svg");
 }
