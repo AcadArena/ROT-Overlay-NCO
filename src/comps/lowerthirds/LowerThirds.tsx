@@ -7,11 +7,11 @@ export type LowerThirdsSize = "small" | "medium" | "large" | number;
 interface LowerThirdsProp {
   size?: LowerThirdsSize;
   shadow?: boolean;
-  disableLogo?: boolean;
+  disablelogo?: boolean;
   className?: string;
   [key: string]: any;
-  reverseCut?: boolean;
-  noCut?: boolean;
+  reversecut?: boolean;
+  nocut?: boolean;
 }
 
 const getPercentage = (base: number, n: number) => {
@@ -47,8 +47,8 @@ const ms = makeStyles({
     backgroundColor: "#02143c",
     transition: "0.6s cubic-bezier(0.25, 1, 0.5, 1)",
     width: ({ size }: LowerThirdsProp): number => getLTWidth(size),
-    clipPath: ({ size, reverseCut, noCut }: LowerThirdsProp) =>
-      reverseCut
+    clipPath: ({ size, reversecut, nocut }: LowerThirdsProp) =>
+      reversecut
         ? `polygon(0% -100%, 100% -100%, 100% 100%,${getPercentage(
             getLTWidth(size),
             39
@@ -62,7 +62,7 @@ const ms = makeStyles({
   shadowWrapper: {
     filter: (props): string =>
       props.shadow
-        ? props.reverseCut
+        ? props.reversecut
           ? "drop-shadow(-12px 9px 0 #004fff)"
           : "drop-shadow(12px 9px 0 #004fff)"
         : "none",
@@ -110,13 +110,18 @@ const ms = makeStyles({
 const LowerThirds: React.FC<LowerThirdsProp> = ({
   className,
   children,
+  disablelogo,
+  nocut,
+  reversecut,
+  shadow,
+  size,
   ...props
 }) => {
-  const c = ms(props);
+  const c = ms({ disablelogo, nocut, reversecut, shadow, size });
   return (
     <div className={c.shadowWrapper + " " + className} {...props}>
       <div className={c.lowerThirds}>
-        {!props.disableLogo && (
+        {!disablelogo && (
           <div className={c.logo}>
             <div className="logo"></div>
           </div>

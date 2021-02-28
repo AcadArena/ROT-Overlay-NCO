@@ -436,7 +436,7 @@ const CasterCam: React.FC = () => {
           toggle
             ? (props) => (
                 <div className={c.match} style={props}>
-                  <LowerThirds size={783} disableLogo shadow>
+                  <LowerThirds size={783} disablelogo shadow>
                     <div className="team">
                       <div
                         className="logo"
@@ -463,7 +463,7 @@ const CasterCam: React.FC = () => {
                     </div>
                   </LowerThirds>
                   <div className="vs">VS</div>
-                  <LowerThirds size={783} reverseCut shadow disableLogo>
+                  <LowerThirds size={783} reversecut shadow disablelogo>
                     <div className="team">
                       <div className="score">
                         {getFinalScore(match?.scores_csv ?? "", 2)}
@@ -528,6 +528,7 @@ const CasterCam: React.FC = () => {
                                   .split("\n")
                                   .map((item, i) => (
                                     <div
+                                      key={i}
                                       className={c.tickerItem}
                                       style={{ whiteSpace: "pre" }}
                                     >
@@ -554,7 +555,7 @@ const CasterCam: React.FC = () => {
                         {lowerThirds?.mode === "casters" && (
                           <div className={c.castersWrapper}>
                             {casters?.map((caster) => (
-                              <div className="caster">
+                              <div className="caster" key={caster.ign}>
                                 <Typography variant="h4" className="name">
                                   {caster.name}
                                 </Typography>
