@@ -1,0 +1,14 @@
+{
+  "projects": {
+    "default": "remote-overlay-tool"
+  },
+  "targets": {
+    "remote-overlay-tool": {
+      "hosting": {
+        "nco": [
+          "aa-nco"
+        ]
+      }
+    }
+  }
+}
