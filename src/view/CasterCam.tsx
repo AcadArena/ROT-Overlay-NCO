@@ -15,6 +15,7 @@ import theme from "../Theme";
 import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { wsContext } from "../config/WebsocketProvider";
 import { Transition } from "react-spring/renderprops";
+import { RouteComponentProps, withRouter } from "react-router-dom";
 
 const ms = makeStyles({
   screen: {
@@ -376,11 +377,18 @@ const getSize = (string: LowerThirdsMode): LowerThirdsSize => {
   }
 };
 
-const CasterCam: React.FC = () => {
+const CasterCam: React.FC<RouteComponentProps> = ({ location: { search } }) => {
   const c = ms();
-  const { lowerThirds, casters, match, match_live, tournament } = useSelector(
-    (state: ReduxState) => state.live
-  );
+  const {
+    lowerThirds,
+    casters,
+    casters_alt,
+    match,
+    match_live,
+    tournament,
+  } = useSelector((state: ReduxState) => state.live);
+
+  let params = new URLSearchParams(search);
 
   const ws = React.useContext(wsContext);
   React.useEffect(() => {
@@ -554,16 +562,27 @@ const CasterCam: React.FC = () => {
                         {/* CASTER */}
                         {lowerThirds?.mode === "casters" && (
                           <div className={c.castersWrapper}>
-                            {casters?.map((caster) => (
-                              <div className="caster" key={caster.ign}>
-                                <Typography variant="h4" className="name">
-                                  {caster.name}
-                                </Typography>
-                                <Typography variant="h5" className="ign">
-                                  {caster.ign}
-                                </Typography>
-                              </div>
-                            ))}
+                            {!Boolean(params.get("alt"))
+                              ? casters?.map((caster) => (
+                                  <div className="caster" key={caster.ign}>
+                                    <Typography variant="h4" className="name">
+                                      {caster.name}
+                                    </Typography>
+                                    <Typography variant="h5" className="ign">
+                                      {caster.ign}
+                                    </Typography>
+                                  </div>
+                                ))
+                              : casters_alt?.map((caster) => (
+                                  <div className="caster" key={caster.ign}>
+                                    <Typography variant="h4" className="name">
+                                      {caster.name}
+                                    </Typography>
+                                    <Typography variant="h5" className="ign">
+                                      {caster.ign}
+                                    </Typography>
+                                  </div>
+                                ))}
                           </div>
                         )}
 
@@ -678,4 +697,4 @@ const CasterCam: React.FC = () => {
   );
 };
 
-export default CasterCam;
+export default withRouter(CasterCam);
