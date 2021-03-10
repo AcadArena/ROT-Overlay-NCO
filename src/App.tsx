@@ -7,6 +7,7 @@ import { makeStyles } from "@material-ui/core";
 import LowerThirdTicker from "./comps/lowerthirds/LowerThirdTicker";
 import { Route, Switch } from "react-router-dom";
 import CasterCam from "./view/CasterCam";
+import Schedule from "./view/Schedule";
 
 const ms = makeStyles({
   app: {
@@ -24,6 +25,9 @@ function App() {
       <Switch>
         <Route path="/castercam">
           <CasterCam />
+        </Route>
+        <Route path="/schedule">
+          <Schedule />
         </Route>
       </Switch>
     </div>
