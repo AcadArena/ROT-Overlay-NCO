@@ -16,6 +16,8 @@ import { CSSTransition, SwitchTransition } from "react-transition-group";
 import { wsContext } from "../config/WebsocketProvider";
 import { Transition } from "react-spring/renderprops";
 import { RouteComponentProps, withRouter } from "react-router-dom";
+import LeftFrame from "../assets/imgs/casterframeleft.png";
+import RightFrame from "../assets/imgs/casterframeright.png";
 
 const ms = makeStyles({
   screen: {
@@ -60,6 +62,7 @@ const ms = makeStyles({
     display: "flex",
     flexDirection: "column",
   },
+
   headline: {
     color: "#ffd200",
     fontFamily: "'industry', sans-serif",
@@ -287,7 +290,6 @@ const ms = makeStyles({
     opacity: 0,
     display: "none",
   },
-
   match: {
     display: "flex",
     position: "absolute",
@@ -310,7 +312,7 @@ const ms = makeStyles({
       alignItems: "center",
 
       "& .logo": {
-        height: "65%",
+        height: "80%",
         width: 100,
         margin: "0px 57px 0px 62px",
         backgroundSize: "contain",
@@ -354,6 +356,48 @@ const ms = makeStyles({
       },
     },
   },
+
+  casters: {
+    display: "flex",
+    width: 1700,
+    height: 542,
+    position: "absolute",
+    top: 252,
+    left: 108,
+    justifyContent: "space-between",
+
+    "& .caster": {
+      height: 542,
+      width: 787,
+      backgroundSize: "contain",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+      position: "relative",
+      "& .ign": {
+        position: "absolute",
+        bottom: 23,
+        color: "#fff",
+        fontSize: 30,
+        letterSpacing: 2,
+        textTransform: "uppercase",
+        fontFamily: "Druk Wide Bold",
+      },
+    },
+
+    "& .left": {
+      backgroundImage: `url(${LeftFrame})`,
+      "& .ign": {
+        left: 25,
+      },
+    },
+    "& .right": {
+      backgroundImage: `url(${RightFrame})`,
+      "& .ign": {
+        textAlign: "right",
+        right: 25,
+      },
+    },
+  },
 });
 
 // const isNumber = (n: any): boolean => {
@@ -381,7 +425,7 @@ const CasterCam: React.FC<RouteComponentProps> = ({ location: { search } }) => {
   const c = ms();
   const {
     lowerThirds,
-    casters,
+    casters = [],
     casters_alt,
     match,
     match_live,
@@ -693,6 +737,15 @@ const CasterCam: React.FC<RouteComponentProps> = ({ location: { search } }) => {
               )
         }
       </Transition>
+
+      <div className={c.casters}>
+        <div className="caster left">
+          <div className="ign">{casters && casters[0]?.name}</div>
+        </div>
+        <div className="caster right">
+          <div className="ign">{casters && casters[1]?.name}</div>
+        </div>
+      </div>
     </div>
   );
 };

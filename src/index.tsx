@@ -22,6 +22,7 @@ ReactDOM.render(
     <Provider store={store}>
       <WebsocketProvider>
         <ThemeProvider theme={Theme}>
+          <CssBaseline />
           <Router>
             <CssBaseline />
             <App />
