@@ -13,6 +13,8 @@ import Ticker from "./view/Ticker";
 import VsScreen from "./view/VsScreen";
 import Ingame from "./view/Ingame";
 import Winner from "./view/Winner";
+import LogoOnly from "./view/LogoOnly";
+import Drafting from "./view/Drafting";
 
 const ms = makeStyles({
   app: {
@@ -48,6 +50,12 @@ function App() {
         </Route>
         <Route path="/winner">
           <Winner />
+        </Route>
+        <Route path="/logo">
+          <LogoOnly />
+        </Route>
+        <Route path="/drafting">
+          <Drafting />
         </Route>
       </Switch>
     </div>
