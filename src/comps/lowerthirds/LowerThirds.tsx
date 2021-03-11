@@ -12,6 +12,7 @@ interface LowerThirdsProp {
   [key: string]: any;
   reversecut?: boolean;
   nocut?: boolean;
+  innerProps?: any;
 }
 
 const getPercentage = (base: number, n: number) => {
@@ -115,12 +116,13 @@ const LowerThirds: React.FC<LowerThirdsProp> = ({
   reversecut,
   shadow,
   size,
+  innerProps,
   ...props
 }) => {
   const c = ms({ disablelogo, nocut, reversecut, shadow, size });
   return (
     <div className={c.shadowWrapper + " " + className} {...props}>
-      <div className={c.lowerThirds}>
+      <div className={c.lowerThirds} {...innerProps}>
         {!disablelogo && (
           <div className={c.logo}>
             <div className="logo"></div>

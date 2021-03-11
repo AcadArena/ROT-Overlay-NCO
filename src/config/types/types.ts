@@ -19,6 +19,60 @@ export interface Live {
   matches_next?: Match[];
   websocket_users: WebsocketUser[];
   room: string;
+  countdown_minutes?: number;
+  stat_player?: PlayerStatProps;
+  stat_player_vs?: StatPlayerVsProps;
+  stat_team_vs?: TeamVsProps;
+  live_data?: LiveData;
+  swap_team_positions?: boolean;
+  match_winner?: {
+    live: boolean;
+    team?: Participant;
+  };
+  container_mode?:
+    | "schedule"
+    | "bracket"
+    | "standings_group_a"
+    | "standings_group_b"
+    | "highlights"
+    | "stats_team_vs"
+    | "stats_player"
+    | "stats_player_vs"
+    | "ending";
+}
+
+export interface LiveData {
+  split_title: string;
+  stage: string;
+  season: string;
+  ingame: string;
+}
+
+export interface TeamVsProps {
+  team1: TeamStatProps;
+  team2: TeamStatProps;
+  stat_names: string[];
+  [key: string]: PlayerStatProps | any;
+}
+export interface TeamStatProps extends Participant {
+  stats: Stat[];
+}
+
+export interface StatPlayerVsProps {
+  player1: PlayerStatProps;
+  player2: PlayerStatProps;
+  stat_names: string[];
+  [key: string]: PlayerStatProps | any;
+}
+
+export interface PlayerStatProps extends Player {
+  stats: Stat[];
+}
+
+export interface Stat {
+  stat_name: string;
+  stat_value: string;
+  isOn: boolean;
 }
 
 export interface Caster {
@@ -34,7 +88,8 @@ export type LowerThirdsMode =
   | "casters"
   | "long"
   | "playerStats"
-  | "playerQuote";
+  | "playerQuote"
+  | "veto";
 export interface LowerThirds {
   headline: string;
   ticker: string;
@@ -81,6 +136,7 @@ export interface Tournament {
   participants: Participant[];
   matches: Match[];
   game_name: string;
+  logo?: string;
 }
 
 export interface ParticipantElement {
@@ -148,5 +204,27 @@ export interface Match {
   suggested_play_order: number;
   prerequisite_match_ids_csv: string;
   scores_csv: string;
+  veto?: VetoItem[];
+  badge?: string;
+  schedule?: Date;
   [key: string]: any;
 }
+
+export interface VetoItem {
+  team: {
+    org_name: string;
+    university_name: string;
+    university_acronym: string;
+    logo: string;
+  };
+  type: "ban" | "pick";
+  map: ValorantMap;
+  winner?: {
+    org_name: string;
+    university_name: string;
+    university_acronym: string;
+    logo: string;
+  };
+}
+
+export type ValorantMap = "ascent" | "bind" | "haven" | "icebox" | "split";
