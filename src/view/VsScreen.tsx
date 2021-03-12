@@ -65,8 +65,17 @@ const mcs = makeStyles((theme) => ({
       lineHeight: 1,
       paddingBottom: 30,
       borderBottom: "3px solid #ffd200",
+      display: "flex",
+      flexDirection: "column",
+      justifyContent: "center",
+      alignItems: "center",
       height: 105,
     },
+    // "& .border": {
+    //   height: 3,
+    //   width: 330,
+    //   backgroundColor: "#ffd200",
+    // },
   },
 }));
 
@@ -116,6 +125,7 @@ const VsScreen = () => {
             ></div>
             <div className="school">{getUniName(match?.player1_id ?? 0)}</div>
             <div className="org">{getOrgName(match?.player1_id ?? 0)}</div>
+            <div className="border"></div>
           </Flag>
         )}
       </Spring>
@@ -145,6 +155,7 @@ const VsScreen = () => {
             ></div>
             <div className="school">{getUniName(match?.player2_id ?? 0)}</div>
             <div className="org">{getOrgName(match?.player2_id ?? 0)}</div>
+            <div className="border"></div>
           </Flag>
         )}
       </Spring>
