@@ -15,6 +15,7 @@ import Ingame from "./view/Ingame";
 import Winner from "./view/Winner";
 import LogoOnly from "./view/LogoOnly";
 import Drafting from "./view/Drafting";
+import WinnerChampion from "./view/WinnerChampion";
 
 const ms = makeStyles({
   app: {
@@ -50,6 +51,9 @@ function App() {
         </Route>
         <Route path="/winner">
           <Winner />
+        </Route>
+        <Route path="/champion">
+          <WinnerChampion />
         </Route>
         <Route path="/logo">
           <LogoOnly />
