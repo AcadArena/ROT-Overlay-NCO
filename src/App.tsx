@@ -47,7 +47,7 @@ function App() {
         <Route path="/vs">
           <VsScreen />
         </Route>
-        <Route path="/ingame">
+        <Route path="/ingame/lol">
           <IngameLol />
         </Route>
         <Route path="/ingame/codm">
