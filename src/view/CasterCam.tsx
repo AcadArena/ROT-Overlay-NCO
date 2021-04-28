@@ -9,6 +9,7 @@ import {
   ReduxState,
   LowerThirdsMode,
   Participant,
+  PollItemProps,
 } from "../config/types/types";
 import Marquee from "react-fast-marquee";
 import theme from "../Theme";
@@ -18,6 +19,9 @@ import { Transition } from "react-spring/renderprops";
 import { RouteComponentProps, withRouter } from "react-router-dom";
 import LeftFrame from "../assets/imgs/casterframeleft.png";
 import RightFrame from "../assets/imgs/casterframeright.png";
+
+import { useDocumentData } from "react-firebase-hooks/firestore";
+import { projectFirestore as db } from "../config/firebase";
 
 const ms = makeStyles({
   screen: {
@@ -398,6 +402,65 @@ const ms = makeStyles({
       },
     },
   },
+  pickem: {
+    height: "100%",
+    alignItems: "center",
+    display: "flex",
+
+    "& .title": {
+      color: "#fff",
+      fontFamily: "Anton",
+      fontSize: 50,
+      textTransform: "uppercase",
+      padding: theme.spacing(0, 5, 0, 8),
+      borderRight: "2px solid rgba(255,255,255,.5)",
+    },
+
+    "& .wrapper": {
+      display: "flex",
+      height: "100%",
+      alignItems: "center",
+      padding: theme.spacing(0, 5),
+      flex: 1,
+
+      "& .team1, .team2": {
+        height: 75,
+        width: 75,
+        backgroundSize: "contain",
+        backgroundPosition: "center",
+        backgroundRepeat: "no-repeat",
+      },
+
+      "& .bar": {
+        flex: 1,
+        height: 50,
+        backgroundColor: "#ffd200",
+        margin: theme.spacing(0, 4),
+        display: "flex",
+        position: "relative",
+        alignItems: "center",
+        clipPath:
+          "polygon(0% 0%, 100% 0%, 100% 75%, 98.5% 100%, 1.5% 100%, 0% 75%)",
+
+        "& .team2votes, .team1votes": {
+          fontFamily: "Druk Wide Bold",
+          fontSize: 25,
+          position: "absolute",
+          padding: theme.spacing(0, 3),
+        },
+
+        "& .team1votes": { left: 0 },
+        "& .team2votes": { right: 0 },
+
+        "& .innerbar": {
+          backgroundColor: "#004fff",
+          height: "100%",
+          width: "100%",
+          transition: " transform 0.6s cubic-bezier(0.65, 0, 0.35, 1)",
+        },
+      },
+    },
+  },
 });
 
 // const isNumber = (n: any): boolean => {
@@ -416,6 +479,8 @@ const getSize = (string: LowerThirdsMode): LowerThirdsSize => {
       return "medium";
     case "playerQuote":
       return "medium";
+    case "pickem":
+      return "large";
     default:
       return "medium";
   }
@@ -431,6 +496,14 @@ const CasterCam: React.FC<RouteComponentProps> = ({ location: { search } }) => {
     match_live,
     tournament,
   } = useSelector((state: ReduxState) => state.live);
+
+  const [poll] = useDocumentData<PollItemProps>(
+    db
+      .collection("tournaments")
+      .doc(tournament?.url)
+      .collection("poll")
+      .doc(match?.id + "")
+  );
 
   let params = new URLSearchParams(search);
 
@@ -469,6 +542,14 @@ const CasterCam: React.FC<RouteComponentProps> = ({ location: { search } }) => {
       }
     });
     return teamIndex === 1 ? team1 : team2;
+  };
+
+  const getPos = (): number => {
+    let totalVotes: number =
+      (poll?.team1_votes ?? 0) + (poll?.team2_votes ?? 0);
+    let pos = ((poll?.team1_votes ?? 0) / totalVotes) * 100;
+
+    return totalVotes > 0 ? pos : 50;
   };
 
   return (
@@ -728,6 +809,61 @@ const CasterCam: React.FC<RouteComponentProps> = ({ location: { search } }) => {
                                 backgroundImage: `url(${lowerThirds?.player?.photo_main})`,
                               }}
                             ></div>
+                          </div>
+                        )}
+                        {lowerThirds?.mode === "pickem" && (
+                          <div className={c.pickem}>
+                            <div className="title">PICKEM</div>
+                            <div className="wrapper">
+                              <div
+                                className="team1"
+                                style={{
+                                  backgroundImage: `url(${poll?.team1?.logo})`,
+                                }}
+                              ></div>
+                              <div className="bar">
+                                <div
+                                  className="innerbar"
+                                  style={{
+                                    clipPath: `polygon(0% 0%, ${getPos()}% 0%, ${getPos()}% 100%, 0% 100%)`,
+                                  }}
+                                ></div>
+                                <div className="team1votes">
+                                  {(poll?.team1_votes ?? 0) +
+                                    (poll?.team2_votes ?? 0) ===
+                                  0
+                                    ? 50
+                                    : Math.round(
+                                        poll?.team1_votes ??
+                                          (0 /
+                                            ((poll?.team1_votes ?? 0) +
+                                              (poll?.team2_votes ?? 0))) *
+                                            100
+                                      )}
+                                  %
+                                </div>
+                                <div className="team2votes">
+                                  {(poll?.team1_votes ?? 0) +
+                                    (poll?.team2_votes ?? 0) ===
+                                  0
+                                    ? 50
+                                    : Math.round(
+                                        poll?.team2_votes ??
+                                          (0 /
+                                            ((poll?.team1_votes ?? 0) +
+                                              (poll?.team2_votes ?? 0))) *
+                                            100
+                                      )}
+                                  %
+                                </div>
+                              </div>
+                              <div
+                                className="team2"
+                                style={{
+                                  backgroundImage: `url(${poll?.team2?.logo})`,
+                                }}
+                              ></div>
+                            </div>
                           </div>
                         )}
                       </div>

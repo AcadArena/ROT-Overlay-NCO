@@ -87,9 +87,11 @@ export type LowerThirdsMode =
   | "ticker"
   | "casters"
   | "long"
-  | "playerStats"
   | "playerQuote"
+  | "playerStats"
+  | "pickem"
   | "veto";
+
 export interface LowerThirds {
   headline: string;
   ticker: string;
@@ -201,12 +203,14 @@ export interface Match {
   underway_at: null | string;
   optional: boolean | null;
   completed_at: string;
+  is_completed?: boolean;
   suggested_play_order: number;
   prerequisite_match_ids_csv: string;
   scores_csv: string;
   veto?: VetoItem[];
   badge?: string;
   schedule?: Date;
+  bestOf?: number;
   [key: string]: any;
 }
 
@@ -215,16 +219,55 @@ export interface VetoItem {
     org_name: string;
     university_name: string;
     university_acronym: string;
+    org_acronym: string;
     logo: string;
   };
   type: "ban" | "pick";
   map: ValorantMap;
   winner?: {
     org_name: string;
-    university_name: string;
     university_acronym: string;
+    university_name: string;
     logo: string;
-  };
+  } | null;
 }
 
+import firebase from "../firebase";
 export type ValorantMap = "ascent" | "bind" | "haven" | "icebox" | "split";
+
+export interface PollItemProps {
+  expiry_date_time: firebase.firestore.Timestamp;
+  team1?: Participant;
+  team2?: Participant;
+  team1_votes: number;
+  team2_votes: number;
+  vote_ids: [];
+  votes: VoteItem[];
+  team1_votes_id: [];
+  team2_votes_id: [];
+  match_id: number;
+  tournament_url: string;
+  is_published: boolean;
+  is_closed: boolean;
+  match_round: number;
+  is_groups: boolean;
+  tournament_name: string;
+  talent_votes: TalentVoteItem[];
+}
+
+export interface TalentVoteItem {
+  caster: Caster;
+  vote?: "team1" | "team2";
+  vote_team_id?: number;
+}
+export interface VoteItem {
+  id: string;
+  vote: "team1" | "team2";
+  vote_team_id: number;
+  date_created: firebase.firestore.Timestamp;
+  fb_link?: string;
+  fb_id?: string;
+  picture: string;
+  name?: string;
+  email: string;
+}
