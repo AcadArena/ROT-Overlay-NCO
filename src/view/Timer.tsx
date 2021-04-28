@@ -3,6 +3,7 @@ import React from "react";
 import Flag from "../comps/containers/Flag";
 import main from "../assets/imgs/main.png";
 import lol from "../assets/imgs/lol.png";
+import codm from "../assets/imgs/codm-logo.png";
 import TimerComponent from "../comps/timer/TimerComp";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../config/types/types";
@@ -42,7 +43,7 @@ const mcs = makeStyles((theme) => ({
       marginTop: 45,
       marginLeft: 10,
       height: 105,
-      width: 105,
+      width: 300,
       backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
@@ -50,10 +51,12 @@ const mcs = makeStyles((theme) => ({
   },
 }));
 
-const games = (game: string) => {
+const games = (game: string = "") => {
   switch (game) {
     case "League of Legends":
       return lol;
+    case "Call of Duty Mobile":
+      return codm;
     default:
       return "";
   }
@@ -80,7 +83,7 @@ const Timer = () => {
             <div
               className="game"
               style={{
-                backgroundImage: `url(${games(tournament?.game_name ?? "")})`,
+                backgroundImage: `url(${games(tournament?.game_name)})`,
               }}
             ></div>
           </Flag>
