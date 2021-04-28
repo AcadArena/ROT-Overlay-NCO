@@ -18,7 +18,8 @@ const mcs = makeStyles({
   text: {
     position: "absolute",
     alignSelf: "center",
-    justifySelf: "center",
+    // justifySelf: "center",
+    bottom: 35,
     zIndex: 10,
     "& .text": {
       fontFamily: "Druk Wide Bold",
