@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
-import LowerThirds from "../comps/lowerthirds/LowerThirds";
-import { Participant, ReduxState } from "../config/types/types";
-import frame from "../assets/imgs/ingameframe.png";
+import LowerThirds from "../../comps/lowerthirds/LowerThirds";
+import { Participant, ReduxState } from "../../config/types/types";
+import frame from "../../assets/imgs/ingameframe.png";
 
 const mcs = makeStyles({
   screen: {
@@ -106,7 +106,7 @@ const mcs = makeStyles({
   },
 });
 
-const Ingame = () => {
+const IngameCodm = () => {
   const c = mcs();
   const { tournament, match, swap_team_positions, live_data } = useSelector(
     (state: ReduxState) => state.live
@@ -146,95 +146,9 @@ const Ingame = () => {
 
   return (
     <div className={c.screen}>
-      <div className={c.top}>
-        <LowerThirds shadow size={785.4} className="lt left" disablelogo>
-          <div className="team">
-            <div
-              className="logo"
-              style={{
-                backgroundImage: `url(${getTeamLogo(
-                  swap_team_positions ? match?.player2_id : match?.player1_id
-                )}})`,
-              }}
-            ></div>
-            <div className="details">
-              <div className="school">
-                {
-                  getParticipant(
-                    (swap_team_positions
-                      ? match?.player2_id
-                      : match?.player1_id) ?? 0
-                  )?.university_name
-                }
-              </div>
-              <div className="name">
-                {
-                  getParticipant(
-                    (swap_team_positions
-                      ? match?.player2_id
-                      : match?.player1_id) ?? 0
-                  )?.org_name
-                }
-              </div>
-            </div>
-            <div className="score">
-              {getFinalScore(
-                match?.scores_csv ?? "",
-                swap_team_positions ? 2 : 1
-              )}
-            </div>
-          </div>
-        </LowerThirds>
-        <LowerThirds
-          shadow
-          size={785.4}
-          className="lt rightlt"
-          disablelogo
-          reversecut
-        >
-          <div className="team">
-            <div className="score">
-              {getFinalScore(
-                match?.scores_csv ?? "",
-                swap_team_positions ? 1 : 2
-              )}
-            </div>
-            <div className="details right">
-              <div className="school">
-                {
-                  getParticipant(
-                    (swap_team_positions
-                      ? match?.player1_id
-                      : match?.player2_id) ?? 0
-                  )?.university_name
-                }
-              </div>
-              <div className="name">
-                {
-                  getParticipant(
-                    (swap_team_positions
-                      ? match?.player1_id
-                      : match?.player2_id) ?? 0
-                  )?.org_name
-                }
-              </div>
-            </div>
-            <div
-              className="logo"
-              style={{
-                backgroundImage: `url(${getTeamLogo(
-                  swap_team_positions ? match?.player1_id : match?.player2_id
-                )}})`,
-              }}
-            ></div>
-          </div>
-        </LowerThirds>
-      </div>
-      <div className={c.bottom}>
-        <div className="text">{live_data?.ingame}</div>
-      </div>
+      <div className={c.top}></div>
     </div>
   );
 };
 
-export default Ingame;
+export default IngameCodm;
