@@ -181,6 +181,7 @@ export interface MatchElement {
   match: Match;
 }
 
+import { VetoCodm } from "./vetoCodm.interface";
 export interface Match {
   id: number;
   tournament_id: number;
@@ -208,6 +209,7 @@ export interface Match {
   prerequisite_match_ids_csv: string;
   scores_csv: string;
   veto?: VetoItem[];
+  veto_codm?: VetoCodm;
   badge?: string;
   schedule?: Date;
   bestOf?: number;
