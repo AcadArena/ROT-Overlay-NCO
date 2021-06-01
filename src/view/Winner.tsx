@@ -2,6 +2,7 @@ import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
 import { config, Spring } from "react-spring/renderprops-universal";
+import bgWinner from "../assets/imgs/bgWinner.png";
 import { ReduxState } from "../config/types/types";
 import bg from "../assets/imgs/bg.png";
 import Flag from "../comps/containers/Flag";
@@ -50,7 +51,7 @@ const mcs = makeStyles({
     position: "absolute",
     top: 0,
     left: 0,
-    backgroundImage: `url(${bg})`,
+    backgroundImage: `url(${bgWinner})`,
     zIndex: 9,
   },
   bg2: {
