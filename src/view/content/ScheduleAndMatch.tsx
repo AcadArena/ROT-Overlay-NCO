@@ -3,7 +3,7 @@ import { Container, makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Match, Participant, ReduxState } from "../../config/types/types";
 import luzon from "../../assets/imgs/luzon.png";
-import metro from "../../assets/imgs/metro.png";
+import metro from "../../assets/imgs/Metro.png";
 import vismin from "../../assets/imgs/vismin.png";
 import { format } from "date-fns";
 import { Spring, Transition } from "react-spring/renderprops";
@@ -375,33 +375,34 @@ const ScheduleAndMatch = () => {
             }}
             trail={300}
           >
-            {(match) => (props) => (
-              // @ts-ignore
-              <div className="match" style={props}>
-                <div className="badge">
-                  <div className="item">{badger(match)}</div>
+            {(match) => (props) =>
+              (
+                // @ts-ignore
+                <div className="match" style={props}>
+                  <div className="badge">
+                    <div className="item">{badger(match)}</div>
+                  </div>
+                  <div className="team">
+                    <div
+                      className="logo"
+                      style={{
+                        backgroundImage: `url(${getOrgLogo(match.player1_id)})`,
+                      }}
+                    ></div>
+                    <div className="name">{getOrgName(match.player1_id)}</div>
+                  </div>
+                  <div className="vs">VS</div>
+                  <div className="team">
+                    <div
+                      className="logo"
+                      style={{
+                        backgroundImage: `url(${getOrgLogo(match.player2_id)})`,
+                      }}
+                    ></div>
+                    <div className="name">{getOrgName(match.player2_id)}</div>
+                  </div>
                 </div>
-                <div className="team">
-                  <div
-                    className="logo"
-                    style={{
-                      backgroundImage: `url(${getOrgLogo(match.player1_id)})`,
-                    }}
-                  ></div>
-                  <div className="name">{getOrgName(match.player1_id)}</div>
-                </div>
-                <div className="vs">VS</div>
-                <div className="team">
-                  <div
-                    className="logo"
-                    style={{
-                      backgroundImage: `url(${getOrgLogo(match.player2_id)})`,
-                    }}
-                  ></div>
-                  <div className="name">{getOrgName(match.player2_id)}</div>
-                </div>
-              </div>
-            )}
+              )}
           </Transition>
           {/* {matches_today
             .filter((m) => m.id !== matchWS?.id)
