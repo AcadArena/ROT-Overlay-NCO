@@ -5,6 +5,7 @@ import main from "../assets/imgs/main.png";
 import lol from "../assets/imgs/lol.png";
 import codm from "../assets/imgs/codm-logo.png";
 import TimerComponent from "../comps/timer/TimerComp";
+import MlbbBanner from "../assets/imgs/MlbbBanner.png";
 import { useSelector } from "react-redux";
 import { ReduxState } from "../config/types/types";
 import { Spring, config } from "react-spring/renderprops-universal";
@@ -15,6 +16,16 @@ const mcs = makeStyles((theme) => ({
     flexDirection: "column",
     alignItems: "center",
     padding: "90px 0 200px 0",
+
+    "& .mlbbBanner": {
+      margin: "80px 0 0",
+      backgroundImage: `url(${MlbbBanner})`,
+      backgroundSize: "contain",
+      backgroundRepeat: "no-repeat",
+      height: 350,
+      width: 350,
+    },
+
     "& .logo": {
       width: 291,
       height: 284,
@@ -80,6 +91,7 @@ const Timer = () => {
             <div className="time">
               <TimerComponent expiryTimestamp={countdown_minutes} />
             </div>
+            <div className="mlbbBanner"></div>
             <div
               className="game"
               style={{
