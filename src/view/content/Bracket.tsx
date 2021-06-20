@@ -3,8 +3,9 @@ import React from "react";
 import { useSelector } from "react-redux";
 import luzon from "../../assets/imgs/luzon.png";
 import vismin from "../../assets/imgs/vismin.png";
-import bracket from "../../assets/imgs/bracket.png";
-import metro from "../../assets/imgs/metro.png";
+import codm from "../../assets/imgs/codm_logo.png";
+import bracket from "../../assets/imgs/bracket_single_elim.png";
+import metro from "../../assets/imgs/Metro.png";
 import { Match, Participant, ReduxState } from "../../config/types/types";
 
 const makeComponentStyles = makeStyles((theme) => ({
@@ -46,11 +47,11 @@ const makeComponentStyles = makeStyles((theme) => ({
     paddingLeft: 50,
     "& .logo": {
       width: 91,
-      margin: "0px 30px 0 20px",
+      // margin: "0px 30px 0 20px",
       backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
-      filter: "drop-shadow(5px 8px 0px #004fff)",
+      // filter: "drop-shadow(5px 8px 0px #004fff)",
     },
 
     "& .text": {
@@ -79,7 +80,7 @@ const makeComponentStyles = makeStyles((theme) => ({
   },
   match: {
     width: 200,
-    height: 70,
+    height: 71,
     display: "flex",
     flexDirection: "column",
     position: "absolute",
@@ -132,55 +133,20 @@ const makeComponentStyles = makeStyles((theme) => ({
     },
   },
 
-  match1: { top: 20.5 },
-  match2: { top: 103 },
-  match3: { top: 58, left: 241 },
-  match4: {
-    top: 213,
-    left: 20,
-    transformOrigin: "top left",
-    transform: "scale(0.92)",
-  },
-  match5: {
-    top: 289,
-    left: 20,
-    transformOrigin: "top left",
-    transform: "scale(0.92)",
-  },
-  match6: {
-    top: 204,
-    left: 241,
-    transformOrigin: "top left",
-    transform: "scale(0.92)",
-  },
-  match7: {
-    top: 281,
-    left: 241,
-    transformOrigin: "top left",
-    transform: "scale(0.92)",
-  },
-  match8: {
-    top: 258,
-    left: 457,
-    transformOrigin: "top left",
-    transform: "scale(0.92)",
-  },
-  match9: {
-    top: 216,
-    left: 666,
-    transformOrigin: "top left",
-    transform: "scale(0.92)",
-  },
-  match10: {
-    top: 69,
-    left: 524,
-  },
+  match1: { top: 21 },
+  match2: { top: 108 },
+  match3: { top: 195 },
+  match4: { top: 282 },
+  match5: { top: 60, left: 312 },
+  match6: { top: 233.5, left: 312 },
+  match7: { top: 150, left: 605 },
 }));
 
 const conferences: any = {
   NCOS2LoL_Luzon: luzon,
   NCOS2LoL_VisMin: vismin,
   NCOS2LoL_Metro: metro,
+  NCOS2CODM: codm,
 };
 
 const Bracket = () => {
@@ -189,7 +155,7 @@ const Bracket = () => {
     (state: ReduxState) => state.live
   );
 
-  const getOrgName = (id: number): string => {
+  const getOrgName = (id: number = 0): string => {
     return (
       tournament?.participants?.find((p) => p.id === id)?.org_name ??
       tournament?.participants.find((p) => p.group_player_ids.includes(id))
@@ -198,7 +164,7 @@ const Bracket = () => {
     );
   };
 
-  const getOrgLogo = (id: number): string => {
+  const getOrgLogo = (id: number = 0): string => {
     return (
       tournament?.participants?.find((p) => p.id === id)?.logo ??
       tournament?.participants.find((p) => p.group_player_ids.includes(id))
@@ -240,9 +206,9 @@ const Bracket = () => {
     return win;
   };
 
-  const team = (id: number | undefined) => {
+  const team = (id: number | undefined = 0) => {
     return tournament?.participants?.find(
-      (p) => p.group_player_ids.includes(id ?? 0) || p.id === id
+      (p) => p.group_player_ids.includes(id) || p.id === id
     );
   };
 
@@ -252,7 +218,7 @@ const Bracket = () => {
         if (
           getMatchWins(m, team(m.player1_id)) >
             getMatchWins(m, team(m.player2_id)) &&
-          getMatchWins(m, team(m.player1_id)) > 1
+          getMatchWins(m, team(m.player1_id)) > 2
         ) {
           return "#004fff";
         } else {
@@ -262,7 +228,7 @@ const Bracket = () => {
         if (
           getMatchWins(m, team(m.player1_id)) <
             getMatchWins(m, team(m.player2_id)) &&
-          getMatchWins(m, team(m.player2_id)) > 1
+          getMatchWins(m, team(m.player2_id)) > 2
         ) {
           return "#004fff";
         } else {
@@ -271,6 +237,21 @@ const Bracket = () => {
       }
     }
   };
+
+  const getPreviousMatchWinner = (i: number = 0): Participant | undefined => {
+    const match = tournament?.matches[i];
+    const player1_id = match?.player1_id;
+    const player2_id = match?.player2_id;
+
+    if (getMatchWins(match, team(player1_id)) > 2) {
+      console.log(getOrgLogo(player1_id));
+      return team(player1_id);
+    } else if (getMatchWins(match, team(player2_id)) > 2) {
+      console.log(getOrgLogo(player2_id));
+      return team(player2_id);
+    }
+  };
+
   return (
     <div className={c.page}>
       <div className="stage">Playoffs</div>
@@ -283,12 +264,12 @@ const Bracket = () => {
               className="logo"
               style={{
                 backgroundImage: `url(${getOrgLogo(
-                  tournament?.matches[0]?.player1_id ?? 0
+                  tournament?.matches[0]?.player1_id
                 )})`,
               }}
             ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[0]?.player1_id ?? 0)}
+              {getOrgName(tournament?.matches[0]?.player1_id)}
             </div>
             <div
               className="score"
@@ -307,12 +288,12 @@ const Bracket = () => {
               className="logo"
               style={{
                 backgroundImage: `url(${getOrgLogo(
-                  tournament?.matches[0]?.player2_id ?? 0
+                  tournament?.matches[0]?.player2_id
                 )})`,
               }}
             ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[0]?.player2_id ?? 0)}
+              {getOrgName(tournament?.matches[0]?.player2_id)}
             </div>
             <div
               className="score"
@@ -334,12 +315,12 @@ const Bracket = () => {
               className="logo"
               style={{
                 backgroundImage: `url(${getOrgLogo(
-                  tournament?.matches[1]?.player1_id ?? 0
+                  tournament?.matches[1]?.player1_id
                 )})`,
               }}
             ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[1]?.player1_id ?? 0)}
+              {getOrgName(tournament?.matches[1]?.player1_id)}
             </div>
             <div
               className="score"
@@ -358,12 +339,12 @@ const Bracket = () => {
               className="logo"
               style={{
                 backgroundImage: `url(${getOrgLogo(
-                  tournament?.matches[1]?.player2_id ?? 0
+                  tournament?.matches[1]?.player2_id
                 )})`,
               }}
             ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[1]?.player2_id ?? 0)}
+              {getOrgName(tournament?.matches[1]?.player2_id)}
             </div>
             <div
               className="score"
@@ -386,7 +367,7 @@ const Bracket = () => {
                 className="logo"
                 style={{
                   backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[2]?.player1_id ?? 0
+                    tournament?.matches[2]?.player1_id
                   )})`,
                 }}
               ></div>
@@ -394,7 +375,7 @@ const Bracket = () => {
               <div style={{ margin: "0px 10px" }}></div>
             )}
             <div className="name">
-              {getOrgName(tournament?.matches[2]?.player1_id ?? 0)}
+              {getOrgName(tournament?.matches[2]?.player1_id)}
             </div>
             {tournament?.matches[2]?.player1_id &&
               tournament?.matches[2]?.player2_id && (
@@ -417,7 +398,7 @@ const Bracket = () => {
                 className="logo"
                 style={{
                   backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[2]?.player2_id ?? 0
+                    tournament?.matches[2]?.player2_id
                   )})`,
                 }}
               ></div>
@@ -425,7 +406,7 @@ const Bracket = () => {
               <div style={{ margin: "0px 10px" }}></div>
             )}
             <div className="name">
-              {getOrgName(tournament?.matches[2]?.player2_id ?? 0)}
+              {getOrgName(tournament?.matches[2]?.player2_id)}
             </div>
 
             {tournament?.matches[2]?.player2_id &&
@@ -452,7 +433,7 @@ const Bracket = () => {
                 className="logo"
                 style={{
                   backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[3]?.player1_id ?? 0
+                    tournament?.matches[3]?.player1_id
                   )})`,
                 }}
               ></div>
@@ -460,7 +441,7 @@ const Bracket = () => {
               <div style={{ margin: "0px 10px" }}></div>
             )}
             <div className="name">
-              {getOrgName(tournament?.matches[3]?.player1_id ?? 0)}
+              {getOrgName(tournament?.matches[3]?.player1_id)}
             </div>
             {tournament?.matches[3]?.player1_id &&
               tournament?.matches[3]?.player2_id && (
@@ -483,7 +464,7 @@ const Bracket = () => {
                 className="logo"
                 style={{
                   backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[3]?.player2_id ?? 0
+                    tournament?.matches[3]?.player2_id
                   )})`,
                 }}
               ></div>
@@ -491,7 +472,7 @@ const Bracket = () => {
               <div style={{ margin: "0px 10px" }}></div>
             )}
             <div className="name">
-              {getOrgName(tournament?.matches[3]?.player2_id ?? 0)}
+              {getOrgName(tournament?.matches[3]?.player2_id)}
             </div>
 
             {tournament?.matches[3]?.player2_id &&
@@ -513,33 +494,30 @@ const Bracket = () => {
         <div className={c.match + " " + c.match5}>
           {/* Left Team */}
           <div className="team">
-            {tournament?.matches[4]?.player1_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[4]?.player1_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
+            <div
+              className="logo"
+              style={{
+                backgroundImage: `url(${
+                  team(tournament?.matches[4]?.player1_id)
+                    ? getOrgLogo(tournament?.matches[4]?.player1_id)
+                    : getPreviousMatchWinner(0)?.logo
+                })`,
+              }}
+            ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[4]?.player1_id ?? 0)}
+              {team(tournament?.matches[4]?.player1_id)
+                ? getOrgName(tournament?.matches[4]?.player1_id)
+                : getPreviousMatchWinner(0)?.org_name || "TBD"}
             </div>
-            {tournament?.matches[4]?.player1_id &&
-              tournament?.matches[4]?.player2_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[4], 1) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[4],
-                    team(tournament?.matches[4].player1_id)
-                  )}
-                </div>
+            <div
+              className="score"
+              style={{ color: getColor(tournament?.matches[4], 1) }}
+            >
+              {getMatchWins(
+                tournament?.matches[4],
+                team(tournament?.matches[4].player1_id)
               )}
+            </div>
           </div>
 
           {/* Right Team */}
@@ -549,7 +527,7 @@ const Bracket = () => {
                 className="logo"
                 style={{
                   backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[4]?.player2_id ?? 0
+                    tournament?.matches[4]?.player2_id
                   )})`,
                 }}
               ></div>
@@ -557,21 +535,18 @@ const Bracket = () => {
               <div style={{ margin: "0px 10px" }}></div>
             )}
             <div className="name">
-              {getOrgName(tournament?.matches[4]?.player2_id ?? 0)}
+              {getOrgName(tournament?.matches[4]?.player2_id)}
             </div>
 
-            {tournament?.matches[4]?.player2_id &&
-              tournament?.matches[4]?.player1_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[4], 2) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[4],
-                    team(tournament?.matches[4].player2_id)
-                  )}
-                </div>
+            <div
+              className="score"
+              style={{ color: getColor(tournament?.matches[4], 2) }}
+            >
+              {getMatchWins(
+                tournament?.matches[4],
+                team(tournament?.matches[4].player2_id)
               )}
+            </div>
           </div>
         </div>
 
@@ -584,7 +559,7 @@ const Bracket = () => {
                 className="logo"
                 style={{
                   backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[5]?.player1_id ?? 0
+                    tournament?.matches[5]?.player1_id
                   )})`,
                 }}
               ></div>
@@ -592,321 +567,111 @@ const Bracket = () => {
               <div style={{ margin: "0px 10px" }}></div>
             )}
             <div className="name">
-              {getOrgName(tournament?.matches[5]?.player1_id ?? 0)}
+              {getOrgName(tournament?.matches[5]?.player1_id)}
             </div>
-            {tournament?.matches[5]?.player1_id &&
-              tournament?.matches[5]?.player2_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[5], 1) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[5],
-                    team(tournament?.matches[5].player1_id)
-                  )}
-                </div>
+            <div
+              className="score"
+              style={{ color: getColor(tournament?.matches[5], 1) }}
+            >
+              {getMatchWins(
+                tournament?.matches[5],
+                team(tournament?.matches[5].player1_id)
               )}
+            </div>
           </div>
 
           {/* Right Team */}
           <div className="team right">
-            {tournament?.matches[5]?.player2_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[5]?.player2_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
+            <div
+              className="logo"
+              style={{
+                backgroundImage: `url(${
+                  team(tournament?.matches[5].player2_id)
+                    ? getOrgLogo(tournament?.matches[5]?.player2_id)
+                    : getPreviousMatchWinner(3)?.logo
+                })`,
+              }}
+            ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[5]?.player2_id ?? 0)}
+              {team(tournament?.matches[5]?.player2_id)
+                ? getOrgName(tournament?.matches[5]?.player2_id)
+                : getPreviousMatchWinner(3)?.org_name || "TBD"}
             </div>
 
-            {tournament?.matches[5]?.player2_id &&
-              tournament?.matches[5]?.player1_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[5], 2) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[5],
-                    team(tournament?.matches[5].player2_id)
-                  )}
-                </div>
+            <div
+              className="score"
+              style={{ color: getColor(tournament?.matches[5], 2) }}
+            >
+              {getMatchWins(
+                tournament?.matches[5],
+                team(tournament?.matches[5].player2_id)
               )}
+            </div>
           </div>
         </div>
 
-        {/* Match 7 ======================================================= */}
+        {/* Match 6 ======================================================= */}
         <div className={c.match + " " + c.match7}>
           {/* Left Team */}
           <div className="team">
-            {tournament?.matches[6]?.player1_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[6]?.player1_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
+            <div
+              className="logo"
+              style={{
+                backgroundImage: `url(${
+                  team(tournament?.matches[6]?.player1_id)
+                    ? getOrgLogo(tournament?.matches[6]?.player1_id)
+                    : getPreviousMatchWinner(4)?.logo
+                })`,
+              }}
+            ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[6]?.player1_id ?? 0)}
+              {team(tournament?.matches[6]?.player1_id)
+                ? getOrgName(tournament?.matches[6]?.player1_id)
+                : getPreviousMatchWinner(4)?.org_name || "TBD"}
             </div>
-            {tournament?.matches[6]?.player1_id &&
-              tournament?.matches[6]?.player2_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[6], 1) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[6],
-                    team(tournament?.matches[6].player1_id)
-                  )}
-                </div>
+            <div
+              className="score"
+              style={{ color: getColor(tournament?.matches[6], 1) }}
+            >
+              {getMatchWins(
+                tournament?.matches[6],
+                team(tournament?.matches[6].player1_id)
               )}
+            </div>
           </div>
 
           {/* Right Team */}
           <div className="team right">
-            {tournament?.matches[6]?.player2_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[6]?.player2_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
+            <div
+              className="logo"
+              style={{
+                backgroundImage: `url(${
+                  team(tournament?.matches[6]?.player2_id)
+                    ? getOrgLogo(tournament?.matches[6]?.player2_id)
+                    : getPreviousMatchWinner(5)?.logo
+                })`,
+              }}
+            ></div>
             <div className="name">
-              {getOrgName(tournament?.matches[6]?.player2_id ?? 0)}
+              {team(tournament?.matches[6]?.player2_id)
+                ? getOrgName(tournament?.matches[6]?.player2_id)
+                : getPreviousMatchWinner(5)?.org_name || "TBD"}
             </div>
 
-            {tournament?.matches[6]?.player2_id &&
-              tournament?.matches[6]?.player1_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[6], 2) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[6],
-                    team(tournament?.matches[6].player2_id)
-                  )}
-                </div>
+            <div
+              className="score"
+              style={{ color: getColor(tournament?.matches[6], 2) }}
+            >
+              {getMatchWins(
+                tournament?.matches[6],
+                team(tournament?.matches[6].player2_id)
               )}
-          </div>
-        </div>
-
-        {/* Match 8 ======================================================= */}
-        <div className={c.match + " " + c.match8}>
-          {/* Left Team */}
-          <div className="team">
-            {tournament?.matches[7]?.player1_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[7]?.player1_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
-            <div className="name">
-              {getOrgName(tournament?.matches[7]?.player1_id ?? 0)}
             </div>
-            {tournament?.matches[7]?.player1_id &&
-              tournament?.matches[7]?.player2_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[7], 1) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[7],
-                    team(tournament?.matches[7].player1_id)
-                  )}
-                </div>
-              )}
-          </div>
-
-          {/* Right Team */}
-          <div className="team right">
-            {tournament?.matches[7]?.player2_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[7]?.player2_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
-            <div className="name">
-              {getOrgName(tournament?.matches[7]?.player2_id ?? 0)}
-            </div>
-
-            {tournament?.matches[7]?.player2_id &&
-              tournament?.matches[7]?.player1_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[7], 2) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[7],
-                    team(tournament?.matches[7].player2_id)
-                  )}
-                </div>
-              )}
-          </div>
-        </div>
-
-        {/* Match 9 ======================================================= */}
-        <div className={c.match + " " + c.match9}>
-          {/* Left Team */}
-          <div className="team">
-            {tournament?.matches[8]?.player1_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[8]?.player1_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
-            <div className="name">
-              {getOrgName(tournament?.matches[8]?.player1_id ?? 0)}
-            </div>
-            {tournament?.matches[8]?.player1_id &&
-              tournament?.matches[8]?.player2_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[8], 1) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[8],
-                    team(tournament?.matches[8].player1_id)
-                  )}
-                </div>
-              )}
-          </div>
-
-          {/* Right Team */}
-          <div className="team right">
-            {tournament?.matches[8]?.player2_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[8]?.player2_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
-            <div className="name">
-              {getOrgName(tournament?.matches[8]?.player2_id ?? 0)}
-            </div>
-
-            {tournament?.matches[8]?.player2_id &&
-              tournament?.matches[8]?.player1_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[8], 2) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[8],
-                    team(tournament?.matches[8].player2_id)
-                  )}
-                </div>
-              )}
-          </div>
-        </div>
-
-        {/* Match 10 ======================================================= */}
-        <div className={c.match + " " + c.match10}>
-          {/* Left Team */}
-          <div className="team">
-            {tournament?.matches[9]?.player1_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[9]?.player1_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
-            <div className="name">
-              {getOrgName(tournament?.matches[9]?.player1_id ?? 0)}
-            </div>
-            {tournament?.matches[9]?.player1_id &&
-              tournament?.matches[9]?.player2_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[9], 1) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[9],
-                    team(tournament?.matches[9].player1_id)
-                  )}
-                </div>
-              )}
-          </div>
-
-          {/* Right Team */}
-          <div className="team right">
-            {tournament?.matches[9]?.player2_id ? (
-              <div
-                className="logo"
-                style={{
-                  backgroundImage: `url(${getOrgLogo(
-                    tournament?.matches[9]?.player2_id ?? 0
-                  )})`,
-                }}
-              ></div>
-            ) : (
-              <div style={{ margin: "0px 10px" }}></div>
-            )}
-            <div className="name">
-              {getOrgName(tournament?.matches[9]?.player2_id ?? 0)}
-            </div>
-
-            {tournament?.matches[9]?.player2_id &&
-              tournament?.matches[9]?.player1_id && (
-                <div
-                  className="score"
-                  style={{ color: getColor(tournament?.matches[9], 2) }}
-                >
-                  {getMatchWins(
-                    tournament?.matches[9],
-                    team(tournament?.matches[9].player2_id)
-                  )}
-                </div>
-              )}
           </div>
         </div>
       </div>
 
-      <div className={c.conference}>
+      {/* <div className={c.conference}>
         <div
           className="logo"
           style={{
@@ -919,7 +684,7 @@ const Bracket = () => {
             Season {live_data?.season} - {live_data?.stage}
           </div>
         </div>
-      </div>
+      </div> */}
     </div>
   );
 };

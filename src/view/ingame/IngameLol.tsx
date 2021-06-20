@@ -1,9 +1,9 @@
 import { makeStyles } from "@material-ui/core";
 import React from "react";
 import { useSelector } from "react-redux";
-import LowerThirds from "../comps/lowerthirds/LowerThirds";
-import { Participant, ReduxState } from "../config/types/types";
-import frame from "../assets/imgs/ingameframe.png";
+import LowerThirds from "../../comps/lowerthirds/LowerThirds";
+import { Participant, ReduxState } from "../../config/types/types";
+import frame from "../../assets/imgs/ingameframe.png";
 
 const mcs = makeStyles({
   screen: {
@@ -106,7 +106,7 @@ const mcs = makeStyles({
   },
 });
 
-const Ingame = () => {
+const IngameLol = () => {
   const c = mcs();
   const { tournament, match, swap_team_positions, live_data } = useSelector(
     (state: ReduxState) => state.live
@@ -237,4 +237,4 @@ const Ingame = () => {
   );
 };
 
-export default Ingame;
+export default IngameLol;

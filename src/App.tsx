@@ -11,11 +11,14 @@ import Content from "./view/Content";
 import Timer from "./view/Timer";
 import Ticker from "./view/Ticker";
 import VsScreen from "./view/VsScreen";
-import Ingame from "./view/Ingame";
+import IngameLol from "./view/ingame/IngameLol";
 import Winner from "./view/Winner";
 import LogoOnly from "./view/LogoOnly";
 import Drafting from "./view/Drafting";
 import WinnerChampion from "./view/WinnerChampion";
+import IngameCodm from "./view/ingame/IngameCodm";
+import VetoScreen from "./view/VetoScreen";
+import IngameMLBB from "./view/ingame/IngameMLBB";
 
 const ms = makeStyles({
   app: {
@@ -46,8 +49,14 @@ function App() {
         <Route path="/vs">
           <VsScreen />
         </Route>
-        <Route path="/ingame">
-          <Ingame />
+        <Route path="/ingame/lol">
+          <IngameLol />
+        </Route>
+        <Route path="/ingame/codm">
+          <IngameCodm />
+        </Route>
+        <Route path="/ingame/mlbb">
+          <IngameMLBB />
         </Route>
         <Route path="/winner">
           <Winner />
@@ -60,6 +69,9 @@ function App() {
         </Route>
         <Route path="/drafting">
           <Drafting />
+        </Route>
+        <Route path="/veto/codm">
+          <VetoScreen />
         </Route>
       </Switch>
     </div>
