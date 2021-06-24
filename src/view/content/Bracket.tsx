@@ -4,7 +4,7 @@ import { useSelector } from "react-redux";
 import luzon from "../../assets/imgs/luzon.png";
 import vismin from "../../assets/imgs/vismin.png";
 import bracket from "../../assets/imgs/bracket.png";
-import metro from "../../assets/imgs/metro.png";
+import metro from "../../assets/imgs/metromanila.png";
 import { Match, Participant, ReduxState } from "../../config/types/types";
 
 const makeComponentStyles = makeStyles((theme) => ({

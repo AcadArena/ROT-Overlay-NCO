@@ -3,7 +3,7 @@ import { Container, makeStyles } from "@material-ui/core";
 import { useSelector } from "react-redux";
 import { Match, Participant, ReduxState } from "../../config/types/types";
 import luzon from "../../assets/imgs/luzon.png";
-import metro from "../../assets/imgs/metro.png";
+import metro from "../../assets/imgs/metromanila.png";
 import vismin from "../../assets/imgs/vismin.png";
 import { format } from "date-fns";
 import { Spring, Transition } from "react-spring/renderprops";
