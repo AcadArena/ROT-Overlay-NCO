@@ -5,7 +5,7 @@ import luzon from "../../assets/imgs/luzon.png";
 import vismin from "../../assets/imgs/vismin.png";
 import codm from "../../assets/imgs/codm_logo.png";
 import bracket from "../../assets/imgs/bracket_single_elim.png";
-import metro from "../../assets/imgs/Metro.png";
+import metro from "../../assets/imgs/metro.png";
 import { Match, Participant, ReduxState } from "../../config/types/types";
 
 const makeComponentStyles = makeStyles((theme) => ({
