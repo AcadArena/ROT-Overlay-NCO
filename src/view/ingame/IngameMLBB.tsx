@@ -2,14 +2,34 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Participant, ReduxState } from "../../config/types/types";
 import ingameMlbb2 from "../../assets/imgs/ingameMlbb2.png";
-import Metro from "../../assets/imgs/Metro.png";
+// import Metro from "../../assets/imgs/Metro.png";
 import { makeStyles } from "@material-ui/core";
-import { findByLabelText } from "@testing-library/dom";
+
+import luzon from "../../assets/imgs/luzon.png";
+import vismin from "../../assets/imgs/vismin.png";
+import metro from "../../assets/imgs/metromanila.png";
+
+const conferences: { [key: string]: string } = {
+  NCOS2MLBB_Luzon: luzon,
+  NCOS2MLBB_VisMin: vismin,
+  NCOS2MLBB_Metro: metro,
+};
 
 const IngameStyle = makeStyles((theme) => ({
   screen: {
     width: 1920,
     height: 1080,
+    position: "relative",
+    "& .badge": {
+      position: "absolute",
+      width: 143,
+      height: 125,
+      left: 338,
+      top: 0,
+      backgroundSize: "auto 85%",
+      backgroundPosition: "center",
+      backgroundRepeat: "no-repeat",
+    },
 
     "& .lowerthird": {
       backgroundImage: `url(${ingameMlbb2})`,
@@ -217,6 +237,13 @@ const IngameMLBB: React.FC = () => {
   };
   return (
     <div className={styles.screen}>
+      <div
+        className="badge"
+        style={{
+          backgroundImage: `url("${conferences[tournament?.url ?? ""]}")`,
+        }}
+      ></div>
+
       <div className="lowerthird">
         {/* <img className="metroCompliance" src={Metro} alt="" /> */}
         {/* <div

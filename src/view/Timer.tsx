@@ -28,7 +28,7 @@ const mcs = makeStyles((theme) => ({
 
     "& .logo": {
       width: 291,
-      height: 284,
+      height: 664,
       backgroundSize: "contain",
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",

@@ -7,6 +7,7 @@ import metro from "../../assets/imgs/metromanila.png";
 import vismin from "../../assets/imgs/vismin.png";
 import { format } from "date-fns";
 import { Spring, Transition } from "react-spring/renderprops";
+import useTournament from "../../config/hooks/useTournament";
 
 const ms = makeStyles((theme) => ({
   current: {
@@ -72,6 +73,7 @@ const ms = makeStyles((theme) => ({
       flexDirection: "column",
       marginTop: 14,
       marginRight: 40,
+      flex: 1,
 
       "& .match": {
         display: "flex",
@@ -229,6 +231,8 @@ const ScheduleAndMatch = () => {
     );
   };
 
+  const { badger } = useTournament();
+
   const getOrgLogo = (id: number): string => {
     return (
       tournament?.participants?.find((p) => p.id === id)?.logo ??
@@ -275,18 +279,18 @@ const ScheduleAndMatch = () => {
     );
   };
 
-  const badger = (m: Match | undefined) => {
-    let team1 = team(m?.player1_id);
-    let team2 = team(m?.player2_id);
+  // const badger = (m: Match | undefined) => {
+  //   let team1 = team(m?.player1_id);
+  //   let team2 = team(m?.player2_id);
 
-    if (m) {
-      if (getMatchWins(m, team1) > 0 || getMatchWins(m, team2) > 0) {
-        return `${getMatchWins(m, team1)} - ${getMatchWins(m, team2)}`;
-      } else {
-        return format(new Date(m.schedule ?? Date.now()), "hh:mm a") ?? "SOON";
-      }
-    }
-  };
+  //   if (m) {
+  //     if (getMatchWins(m, team1) > 0 || getMatchWins(m, team2) > 0) {
+  //       return `${getMatchWins(m, team1)} - ${getMatchWins(m, team2)}`;
+  //     } else {
+  //       return format(new Date(m.schedule ?? Date.now()), "hh:mm a") ?? "SOON";
+  //     }
+  //   }
+  // };
   return (
     <div className={c.wrapper}>
       <div className={c.current}>
@@ -326,7 +330,7 @@ const ScheduleAndMatch = () => {
               </div>
               <div className="badge-wrap">
                 <div className="badge">
-                  <div className="item">{badger(matchWS)}</div>
+                  <div className="item">{badger(matchWS as Match)}</div>
                 </div>
                 <div className="vs">VS</div>
               </div>
@@ -350,7 +354,13 @@ const ScheduleAndMatch = () => {
       <div className={c.schedule}>
         <div className="head">SCHEDULE</div>
 
-        <div className="matches">
+        <div
+          className="matches"
+          style={{
+            ...(matches_today.filter((m) => m.id !== matchWS?.id).length <
+              4 && { justifyContent: "center", paddingBottom: 50 }),
+          }}
+        >
           <Transition
             items={matches_today.filter((m) => m.id !== matchWS?.id)}
             keys={(m) => m.id}
