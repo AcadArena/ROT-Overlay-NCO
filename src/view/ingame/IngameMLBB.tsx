@@ -274,13 +274,19 @@ const IngameMLBB: React.FC = () => {
                 }}
               />
               <Textfit max={24} mode="single" className="team1Name">
-                {
+                {`${
+                  getParticipant(
+                    (swap_team_positions
+                      ? match?.player2_id
+                      : match?.player1_id) ?? 0
+                  )?.university_acronym
+                } ${
                   getParticipant(
                     (swap_team_positions
                       ? match?.player2_id
                       : match?.player1_id) ?? 0
                   )?.org_name
-                }
+                }`}
               </Textfit>
             </div>
             <div className="team-score">
@@ -305,13 +311,19 @@ const IngameMLBB: React.FC = () => {
                 }}
               />
               <Textfit max={24} mode="single" className="team2Name">
-                {
+                {`${
+                  getParticipant(
+                    (swap_team_positions
+                      ? match?.player1_id
+                      : match?.player2_id) ?? 0
+                  )?.university_acronym
+                } ${
                   getParticipant(
                     (swap_team_positions
                       ? match?.player1_id
                       : match?.player2_id) ?? 0
                   )?.org_name
-                }
+                }`}
               </Textfit>
             </div>
             <div className="team-score">
