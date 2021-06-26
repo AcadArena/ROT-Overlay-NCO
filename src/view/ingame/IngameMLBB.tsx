@@ -99,7 +99,7 @@ const IngameStyle = makeStyles((theme) => ({
           },
 
           "& .team1Name": {
-            width: 270,
+            width: 258,
             height: 48,
             display: "flex",
             alignItems: "center",
@@ -169,7 +169,7 @@ const IngameStyle = makeStyles((theme) => ({
           },
 
           "& .team2Name": {
-            width: 270,
+            width: 258,
             textAlign: "center",
             color: "#ffffff",
             position: "absolute",
