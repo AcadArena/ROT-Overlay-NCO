@@ -209,9 +209,9 @@ const ms = makeStyles((theme) => ({
 }));
 
 const conferences: any = {
-  NCOS2LoL_Luzon: luzon,
-  NCOS2LoL_VisMin: vismin,
-  NCOS2LoL_Metro: metro,
+  NCOS2MLBB_Luzon: luzon,
+  NCOS2MLBB_VisMin: vismin,
+  NCOS2MLBB_Metro: metro,
 };
 
 const ScheduleAndMatch = () => {
@@ -249,7 +249,7 @@ const ScheduleAndMatch = () => {
     let lost: number = 0;
 
     let isTeam1 =
-      groupIds.includes(match.player1_id) || team?.id === match.player1_id;
+      groupIds.includes(match?.player1_id) || team?.id === match?.player1_id;
 
     let sss = match.scores_csv.split(",");
 
@@ -330,7 +330,9 @@ const ScheduleAndMatch = () => {
               </div>
               <div className="badge-wrap">
                 <div className="badge">
-                  <div className="item">{badger(matchWS as Match)}</div>
+                  {matchWS && (
+                    <div className="item">{badger(matchWS as Match)}</div>
+                  )}
                 </div>
                 <div className="vs">VS</div>
               </div>
@@ -396,20 +398,24 @@ const ScheduleAndMatch = () => {
                     <div
                       className="logo"
                       style={{
-                        backgroundImage: `url(${getOrgLogo(match.player1_id)})`,
+                        backgroundImage: `url(${getOrgLogo(
+                          match?.player1_id
+                        )})`,
                       }}
                     ></div>
-                    <div className="name">{getOrgName(match.player1_id)}</div>
+                    <div className="name">{getOrgName(match?.player1_id)}</div>
                   </div>
                   <div className="vs">VS</div>
                   <div className="team">
                     <div
                       className="logo"
                       style={{
-                        backgroundImage: `url(${getOrgLogo(match.player2_id)})`,
+                        backgroundImage: `url(${getOrgLogo(
+                          match?.player2_id
+                        )})`,
                       }}
                     ></div>
-                    <div className="name">{getOrgName(match.player2_id)}</div>
+                    <div className="name">{getOrgName(match?.player2_id)}</div>
                   </div>
                 </div>
               )}
