@@ -9,6 +9,9 @@ import luzon from "../../assets/imgs/luzon.png";
 import vismin from "../../assets/imgs/vismin.png";
 import metro from "../../assets/imgs/metromanila.png";
 
+// @ts-ignore
+import { Textfit } from "react-textfit";
+
 const conferences: { [key: string]: string } = {
   NCOS2MLBB_Luzon: luzon,
   NCOS2MLBB_VisMin: vismin,
@@ -96,11 +99,16 @@ const IngameStyle = makeStyles((theme) => ({
           },
 
           "& .team1Name": {
+            width: 270,
+            height: 48,
+            display: "flex",
+            alignItems: "center",
             textAlign: "center",
             color: "#ffffff",
             position: "absolute",
             left: "5rem",
-            top: 17,
+            top: 12,
+            lineHeight: 1,
           },
         },
 
@@ -161,12 +169,16 @@ const IngameStyle = makeStyles((theme) => ({
           },
 
           "& .team2Name": {
-            width: "100%",
+            width: 270,
             textAlign: "center",
             color: "#ffffff",
             position: "absolute",
-            left: "15rem",
-            top: 18,
+            left: 270,
+            top: 12,
+            height: 48,
+            lineHeight: 1,
+            display: "flex",
+            alignItems: "center",
           },
         },
 
@@ -261,7 +273,7 @@ const IngameMLBB: React.FC = () => {
                   )})`,
                 }}
               />
-              <span className="team1Name">
+              <Textfit max={24} mode="single" className="team1Name">
                 {
                   getParticipant(
                     (swap_team_positions
@@ -269,7 +281,7 @@ const IngameMLBB: React.FC = () => {
                       : match?.player1_id) ?? 0
                   )?.org_name
                 }
-              </span>
+              </Textfit>
             </div>
             <div className="team-score">
               <span className="team1Score">
@@ -292,7 +304,7 @@ const IngameMLBB: React.FC = () => {
                   )}})`,
                 }}
               />
-              <span className="team2Name">
+              <Textfit max={24} mode="single" className="team2Name">
                 {
                   getParticipant(
                     (swap_team_positions
@@ -300,7 +312,7 @@ const IngameMLBB: React.FC = () => {
                       : match?.player2_id) ?? 0
                   )?.org_name
                 }
-              </span>
+              </Textfit>
             </div>
             <div className="team-score">
               <span className="team2Score">

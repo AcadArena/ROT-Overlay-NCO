@@ -19,6 +19,7 @@ import WinnerChampion from "./view/WinnerChampion";
 import IngameCodm from "./view/ingame/IngameCodm";
 import VetoScreen from "./view/VetoScreen";
 import IngameMLBB from "./view/ingame/IngameMLBB";
+import Highlights from "./view/Highlights";
 
 const ms = makeStyles({
   app: {
@@ -72,6 +73,9 @@ function App() {
         </Route>
         <Route path="/veto/codm">
           <VetoScreen />
+        </Route>
+        <Route path="/highlights">
+          <Highlights />
         </Route>
       </Switch>
     </div>
