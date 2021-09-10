@@ -1,5 +1,4 @@
 import { Divider, makeStyles, Typography } from "@material-ui/core";
-import React from "react";
 import { useSelector } from "react-redux";
 import LowerThirds, {
   getLTWidth,
@@ -22,6 +21,7 @@ import RightFrame from "../assets/imgs/casterframeright.png";
 
 import { useDocumentData } from "react-firebase-hooks/firestore";
 import { projectFirestore as db } from "../config/firebase";
+import React from "react";
 
 const ms = makeStyles({
   screen: {
@@ -377,29 +377,36 @@ const ms = makeStyles({
       backgroundPosition: "center",
       backgroundRepeat: "no-repeat",
       position: "relative",
+      display: "flex",
+      justifyContent: "center",
       "& .ign": {
         position: "absolute",
-        bottom: 23,
-        color: "#fff",
-        fontSize: 30,
+        height: 50,
+        bottom: 12,
+        color: "#000",
+        fontSize: 24,
         letterSpacing: 2,
+        lineHeight: 1,
         textTransform: "uppercase",
         fontFamily: "Druk Wide Bold",
+        textAlign: "center",
+        display: "flex",
+        alignItems: "center",
       },
     },
 
     "& .left": {
       backgroundImage: `url(${LeftFrame})`,
-      "& .ign": {
-        left: 25,
-      },
+      // "& .ign": {
+      //   left: 25,
+      // },
     },
     "& .right": {
       backgroundImage: `url(${RightFrame})`,
-      "& .ign": {
-        textAlign: "right",
-        right: 25,
-      },
+      // "& .ign": {
+      //   textAlign: "right",
+      //   right: 25,
+      // },
     },
   },
   pickem: {
