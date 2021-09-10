@@ -18,7 +18,7 @@ let config = {
   host: "",
   path: "",
 };
-const hostCloud: string = "https://servers.acadarena.com/ws";
+const hostCloud: string = "https://servers.acadarena.com/";
 const hostLocal: string = "localhost:3200";
 
 if (window.location.hostname === "localhost") {
