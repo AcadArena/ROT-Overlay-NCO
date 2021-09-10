@@ -33,7 +33,10 @@ if (window.location.hostname === "localhost") {
   };
 }
 
-let socket: any = io.connect(`${config.host}`, { path: config.path });
+let socket: any = io.connect(`${config.host}`, {
+  path: config.path,
+  transports: ["websocket", "polling", "flashsocket"],
+});
 socket.emit("join_room", { room: "nco", username: "brodcast module" });
 socket.on("set_live_settings", (settings: any) =>
   store.dispatch(setLiveSettings(settings))
