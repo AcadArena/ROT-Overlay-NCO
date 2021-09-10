@@ -10,6 +10,18 @@
 }
 
 @font-face {
+  font-family: "Montserrat-Bold";
+  src: url("assets/fonts/Montserrat-Bold.ttf");
+  src: local("Montserrat-Bold"), local("Montserrat-Bold"),
+}
+
+@font-face {
+  font-family: "Tungsten-Bold";
+  src: url("assets/fonts/Tungsten-Bold.otf");
+  src: local("Tungsten-Bold"), local("Tungsten-Bold"),
+}
+
+@font-face {
   font-family: "Industry";
   src: url("assets/fonts/Industry-Bold.eot");
   src: local("Industry Bold"), local("Industry-Bold"),
